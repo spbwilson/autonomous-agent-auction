@@ -1,0 +1,26 @@
+for group in groupList:
+	roboIDs = group.getGroupRobotIDs()
+
+	quartersTaken = [0,0,0,0]
+	for i in roboIDs:
+		robotX = robotList[i].getX()
+		robotY = robotList[i].getY()
+
+		#Check each quarter, get info from group members (decentralised info)
+		if (robotX < group.getX()) & (robotY > group.getY()) & (quartersTaken[0] != 1):
+			robotList[i].setQuarter(0)
+			quartersTaken[0] = 1
+		elif (robotX > group.getX()) & (robotY > group.getY()) & (quartersTaken[1] != 1):
+			robotList[i].setQuarter(1)
+			quartersTaken[1] = 1
+		elif (robotX > group.getX()) & (robotY < group.getY()) & (quartersTaken[2] != 1):
+			robotList[i].setQuarter(2)
+			quartersTaken[2] = 1
+		elif (robotX < group.getX()) & (robotY < group.getY()) & (quartersTaken[3] != 1):
+			robotList[i].setQuarter(3)
+			quartersTaken[3] = 1
+		else:
+			for q in xrange(4):
+				if quartersTaken[q] != 1:
+					robotList[i].setQuarter(q)
+					quartersTaken[q] = 1
